@@ -136,6 +136,13 @@ if which systemctl >/dev/null 2>/dev/null; then
   exit 0
 fi
 
+if which sv >/dev/null 2>/dev/null; then
+  for x in $SERVICES; do
+    sv hup "$x" >/dev/null 2>/dev/null || true
+  done
+  exit 0
+fi
+
 if [ -e "/etc/init.d" ]; then
   for x in $SERVICES; do
     /etc/init.d/$x reload >/dev/null 2>/dev/null || true
